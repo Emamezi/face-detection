@@ -1,22 +1,19 @@
 import React, { Component } from "react";
-import Navigation from "./components/Navigation/Navigation";
-import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
-import FaceRecognition from "./components/FaceRecognition/FaceRecognitioin";
-import SignIn from "./components/SignIn/SignIn";
-import Register from "./components/Register/Register";
-import Rank from "./components/Rank/Rank";
+import Navigation from "../components/Navigation/Navigation";
+import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm";
+import FaceRecognition from "../components/FaceRecognition/FaceRecognitioin";
+import SignIn from "../components/SignIn/SignIn";
+import Register from "../components/Register/Register";
+import Rank from "../components/Rank/Rank";
 import ParticlesBg from "particles-bg";
-import Logo from "./components/Logo/Logo";
+import Logo from "../components/Logo/Logo";
 import "./App.css";
 
 const returnClarifaiRequestOptions = (imageUrl) => {
   const PAT = "e6b3c98fc4aa4b67b3182c87f68cc443";
   const USER_ID = "6038qrswy1gw";
   const APP_ID = "smartbrain";
-  // Change these to whatever model and image URL you want to use
-  // const MODEL_ID = "face-detection";
   const IMAGE_URL = imageUrl;
-  // To use image bytes, assign its variable
   // const IMAGE_BYTES_STRING = '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAoACgDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAYDBQcE/8QAMBAAAQMDAwMDAgQHAAAAAAAAAQIDBAAFEQYSIQcTMTJBURRhCBYikSNScXKhsdH/xAAZAQACAwEAAAAAAAAAAAAAAAAFBgIDBAf/xAAtEQABAwMBBgQHAQAAAAAAAAABAgMRAAQhMQUSE0FRYQaBocEUFiJCcrHR8P/aAAwDAQACEQMRAD8A3+RYY1unSYzCS0ttZUkAgktn0q5yT7jPyDUC4wdGwycH5U2Kt9ZQ7VI1qw5PkvQy3CSVPpf7aQjuKyFH25xzn3pHn3TVNy01Hl2hyy6YdkSpKsS9sl/6RlI3rRu3dxWd6spwnAGPIJTfl925fcLaoSDHXvyo6i9SlCQrU9wKln3OyWiaDN1RAbW3kKbSd7gPtwMkH/tTWy9afuy1iPfnXMAblITwkE4yf08cn3pSbYt1uts24XH6fUbiLAuY1MWyGkLEmUW0rcCRvUpQ5CtwKQCPgi4S1ZbDe4sd9NntDEe79m3uOBLTr0IR9jzodSMqUpTu9JJ8owD7UTT4ZCfv9PbP7860m+s+HBSrejWRuz2kAxoesGYxTW/Zlpkwo1vkuSly3UgKWQUhHJUvIHsAaKTemF8XE6sWmxyZkiaZrMh1jv8ArQNpUVqB8FW0njHqx4zRVVhsph1KlKk5xQ+7uHmikaSJrQerMByet2IwvtuTLa4xv2k7Rk84H9x/esHv92d01boenLXGcuiWrFIhLlpbcaQ2/JdK3VJCkAq2pAR7Zz7YxWudY9fxNIdQbNGkR5TyX4aisNNpUMFZAzkj4NK0jq9ZpbLr0PSlzkhrlZDaQlP3P8Q4/ap3F87bPucJEkx/hHv60b2TYXLrKN5sramYECSQRk9M6c6zmJ+eb5Hi22M7cnWGIQgFLbX0zSo4PDa1YBcTgDyMjJ/qbGPabH08SJt1Uzc9QqRliGg5QySPKvgc+TyfYDmmTUWpNYz7ctxoQdPQshCktupckDJUPUcJT6DwMq8YyaQ9VL0pCS8zapcq4SVOBZmPDO8/cnknlWcDBwn4NYnPjLkQ+qE9OtOVlYpeVHDCEkkkJyT+SuQzy5Y0ru6Ez511/Efa5s1fdkOtyVurIxgdlQAA9gOKKPwolU7remU5hCGYEgo38KUv9I/0TRTDYJCWQBSF4rIN/CRgAR0iTpVD1j1g/qDqJcJqlKcjB9bcda142MpOEJAzgeMnjyTSyze5KEuNRpDoDvC0oe4X9iAeaKKFK+oya6fbOqYbDTeEiAPKpHdS3gBLYc7RQkp3ApQog+cq8nwPJrljzxnPZbUfnugn/NFFRgEVch9xKsH0H8pg6e3x3T3UC1ajaZITGkJLoS4MKbOUrzz/ACKVRRRVzVwtoQmhG1NkWu0HuI+JI8u/Kv/Z';
 
   const raw = JSON.stringify({
@@ -56,12 +53,37 @@ class App extends Component {
       box: {},
       route: "signin",
       isSignedIn: false,
+      user: {
+        id: 125,
+        name: "",
+        email: "",
+        password: "",
+        entries: 0,
+        joined: "",
+      },
     };
+  }
+  componentDidMount() {
+    fetch("http://localhost:3000/")
+      .then((response) => response.json())
+      .then(console.log);
   }
 
   onInputChange = (event) => {
     this.setState({ userInput: event.target.value });
     // console.log(event.target.value);
+  };
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        entries: data.entries,
+        joined: data.joined,
+      },
+    });
   };
   calculateFaceLocation = (data) => {
     const clarifaiFace =
@@ -79,8 +101,23 @@ class App extends Component {
   };
 
   displayFaceBox = (box) => {
-    console.log(box);
     this.setState({ box: box });
+  };
+
+  onButtonSubmit = () => {
+    this.setState({ imageUrl: this.state.userInput });
+    fetch(
+      "https://api.clarifai.com/v2/models/face-detection/outputs",
+      returnClarifaiRequestOptions(this.state.userInput)
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(
+        //   result.outputs.at(0).data.regions[0].region_info.bounding_box
+        // );
+        this.displayFaceBox(this.calculateFaceLocation(result));
+      })
+      .catch((error) => console.log("error", error));
   };
   onRouteChange = (route) => {
     if (route === "signout") {
@@ -90,53 +127,16 @@ class App extends Component {
     }
     this.setState({ route: route });
   };
-  onButtonSubmit = () => {
-    console.log("sbmitted");
-    this.setState({ imageUrl: this.state.userInput });
-    fetch(
-      "https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs",
-      returnClarifaiRequestOptions(this.state.userInput)
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        // console.log(
-        //   result.outputs.at(0).data.regions[0].region_info.bounding_box
-        // );
-        this.displayFaceBox(this.calculateFaceLocation(result));
-        // this.calculateFaceLocation(result);
-        // const regions = result.outputs[0].data.regions;
-        // regions.forEach((region) => {
-        //   // Accessing and rounding the bounding box values
-        //   const boundingBox = region.region_info.bounding_box;
-        //   const topRow = boundingBox.top_row.toFixed(3);
-        //   const leftCol = boundingBox.left_col.toFixed(3);
-        //   const bottomRow = boundingBox.bottom_row.toFixed(3);
-        //   const rightCol = boundingBox.right_col.toFixed(3);
-        //   region.data.concepts.forEach((concept) => {
-        //     // Accessing and rounding the concept value
-        //     const name = concept.name;
-        //     const value = concept.value.toFixed(4);
-        //     console.log(
-        //       `${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`
-        //     );
-        //   });
-        // });
-      })
-      .catch((error) => console.log("error", error));
-  };
-  // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
-  // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
-  // this will default to the latest version_id
-
   render() {
+    const { isSignedIn, route, imageUrl, box } = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" num={60} bg={true} />
         <Navigation
           onRouteChange={this.onRouteChange}
-          isSignedIn={this.state.isSignedIn}
+          isSignedIn={isSignedIn}
         />
-        {this.state.route === "home" ? (
+        {route === "home" ? (
           <div>
             <Logo />
             <Rank />
@@ -144,15 +144,15 @@ class App extends Component {
               onInputChange={this.onInputChange}
               onBtnSubmit={this.onButtonSubmit}
             />
-            <FaceRecognition
-              box={this.state.box}
-              imageUrl={this.state.imageUrl}
-            />
+            <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
-        ) : this.state.route === "signin" ? (
+        ) : route === "signin" ? (
           <SignIn onRouteChange={this.onRouteChange} />
         ) : (
-          <Register onRouteChange={this.onRouteChange} />
+          <Register
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+          />
         )}
       </div>
     );
