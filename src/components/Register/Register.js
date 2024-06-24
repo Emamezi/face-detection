@@ -62,7 +62,7 @@ class Register extends React.Component {
                   type="text"
                   name="name"
                   id="name"
-                  onChange={this.registerEmail}
+                  onChange={this.registerName}
                 />
               </div>
               <div className="mt3">

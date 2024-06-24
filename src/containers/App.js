@@ -54,7 +54,7 @@ class App extends Component {
       route: "signin",
       isSignedIn: false,
       user: {
-        id: 125,
+        id: "",
         name: "",
         email: "",
         password: "",
@@ -63,11 +63,11 @@ class App extends Component {
       },
     };
   }
-  componentDidMount() {
-    fetch("http://localhost:3000/")
-      .then((response) => response.json())
-      .then(console.log);
-  }
+  // componentDidMount() {
+  //   fetch("http://localhost:3000/")
+  //     .then((response) => response.json())
+  //     .then(console.log);
+  // }
 
   onInputChange = (event) => {
     this.setState({ userInput: event.target.value });

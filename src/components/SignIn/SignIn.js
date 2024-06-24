@@ -1,5 +1,4 @@
 import React from "react";
-// import ".App/css";
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -23,14 +22,14 @@ class SignIn extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    // console.log(this.state);
+    console.log(this.state);
     fetch("http://localhost:3000/signin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        emai: this.state.signInEmail,
+        email: this.state.signInEmail,
         password: this.state.signInPassword,
       }),
     })
