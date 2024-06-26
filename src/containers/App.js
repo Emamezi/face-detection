@@ -90,7 +90,6 @@ class App extends Component {
     const img = document.getElementById("image");
     const width = Number(img.width);
     const height = Number(img.height);
-    console.log(width, height);
     return {
       left_col: width * clarifaiFace.left_col,
       top_row: height * clarifaiFace.top_row,
@@ -111,6 +110,19 @@ class App extends Component {
     )
       .then((response) => response.json())
       .then((result) => {
+        if (result) {
+          fetch("http://localhost:3000/image", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: this.state.user.id,
+            }),
+          })
+            .then((response) => response.json())
+            .then((count) => {
+              this.setState(Object.assign(this.state.user, { entries: count }));
+            });
+        }
         this.displayFaceBox(this.calculateFaceLocation(result));
       })
       .catch((error) => console.log("error", error));
@@ -136,7 +148,7 @@ class App extends Component {
           <div>
             <Logo />
             <Rank
-              userName={this.state.user.name}
+              name={this.state.user.name}
               entries={this.state.user.entries}
             />
             <ImageLinkForm
