@@ -4,37 +4,38 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      registerName: "",
-      registerEmail: "",
-      registerPassword: "",
+      name: "",
+      email: "",
+      password: "",
     };
   }
-  onRegisterName = (event) => {
+  onNameChange = (event) => {
     this.setState({ name: event.target.value });
   };
-  onRegisterEmail = (event) => {
+  onEmailChange = (event) => {
     this.setState(() => {
       return {
-        registerEmail: event.target.value,
+        email: event.target.value,
       };
     });
   };
-  onRegisterPassword = (event) => {
+  onPasswordChange = (event) => {
     this.setState(() => {
       return {
-        registerPassword: event.target.value,
+        password: event.target.value,
       };
     });
   };
 
-  onSubmitRegister = () => {
+  onSubmitSignIn = () => {
+    console.log(this.state);
     fetch("http://localhost:3000/register", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: this.state.registerName,
-        email: this.state.registerEmail,
-        password: this.state.registerPassword,
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
       }),
     })
       .then((response) => response.json())
@@ -62,7 +63,7 @@ class Register extends React.Component {
                   type="text"
                   name="name"
                   id="name"
-                  onChange={this.registerName}
+                  onChange={this.onNameChange}
                 />
               </div>
               <div className="mt3">
@@ -74,7 +75,7 @@ class Register extends React.Component {
                   type="email"
                   name="email-address"
                   id="email-address"
-                  onCanPlay={this.registerEmail}
+                  onChange={this.onEmailChange}
                 />
               </div>
               <div className="mv3">
@@ -86,16 +87,16 @@ class Register extends React.Component {
                   type="password"
                   name="password"
                   id="password"
-                  onChange={this.registerPassword}
+                  onChange={this.onPasswordChange}
                 />
               </div>
             </fieldset>
             <div className="">
               <input
-                onClick={this.onSubmitRegister}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
                 value="Register"
+                onClick={this.onSubmitSignIn}
               />
             </div>
           </form>

@@ -57,7 +57,6 @@ class App extends Component {
         id: "",
         name: "",
         email: "",
-        password: "",
         entries: 0,
         joined: "",
       },
@@ -69,21 +68,21 @@ class App extends Component {
   //     .then(console.log);
   // }
 
-  onInputChange = (event) => {
-    this.setState({ userInput: event.target.value });
-    // console.log(event.target.value);
-  };
   loadUser = (data) => {
     this.setState({
       user: {
         id: data.id,
         name: data.name,
         email: data.email,
-        password: data.password,
         entries: data.entries,
         joined: data.joined,
       },
     });
+  };
+
+  onInputChange = (event) => {
+    this.setState({ userInput: event.target.value });
+    // console.log(event.target.value);
   };
   calculateFaceLocation = (data) => {
     const clarifaiFace =
@@ -112,9 +111,6 @@ class App extends Component {
     )
       .then((response) => response.json())
       .then((result) => {
-        // console.log(
-        //   result.outputs.at(0).data.regions[0].region_info.bounding_box
-        // );
         this.displayFaceBox(this.calculateFaceLocation(result));
       })
       .catch((error) => console.log("error", error));
@@ -139,7 +135,10 @@ class App extends Component {
         {route === "home" ? (
           <div>
             <Logo />
-            <Rank />
+            <Rank
+              userName={this.state.user.name}
+              entries={this.state.user.entries}
+            />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onBtnSubmit={this.onButtonSubmit}
@@ -147,7 +146,7 @@ class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
         ) : route === "signin" ? (
-          <SignIn onRouteChange={this.onRouteChange} />
+          <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : (
           <Register
             onRouteChange={this.onRouteChange}
