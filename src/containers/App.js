@@ -80,6 +80,7 @@ class App extends Component {
   onInputChange = (event) => {
     this.setState({ userInput: event.target.value });
   };
+
   calculateFaceLocation = (data) => {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -107,7 +108,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((result) => {
         if (result) {
-          fetch("http://localhost:3000/image", {
+          fetch("https://safe-reef-32266-2f5bd9d95d9f.herokuapp.com/image", {
             method: "put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -124,6 +125,7 @@ class App extends Component {
       })
       .catch((error) => console.log("error", error));
   };
+
   onRouteChange = (route) => {
     if (route === "signout") {
       this.setState(initialState);
