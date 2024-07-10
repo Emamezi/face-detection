@@ -68,20 +68,20 @@ const Password = ({ onPasswordChange }) => {
         type="password"
         name="password"
         id="password"
-        onChange={this.onPasswordChange}
+        onChange={onPasswordChange}
       />
     </div>
   );
 };
 
-const SigninButton = () => {
+const SigninButton = ({ onSubmitSignIn }) => {
   return (
     <div className="">
       <input
         className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
         type="submit"
         value="Register"
-        onClick={this.onSubmitSignIn}
+        onClick={onSubmitSignIn}
       />
     </div>
   );
