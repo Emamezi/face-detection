@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Fieldset,
+  FieldSet,
   Form,
   Email,
   Password,
@@ -55,10 +55,10 @@ class SignIn extends React.Component {
     return (
       <Form>
         <legend className="f2 fw6 ph0 mh0"> Sign In</legend>
-        <Fieldset>
+        <FieldSet>
           <Email onEmailChange={onEmailChange} />
           <Password onPasswordChange={onPasswordChange} />
-        </Fieldset>
+        </FieldSet>
         <SigninButton onSubmitSignIn={onSubmitSignIn} />
         <RegisterLink onRouteChange={onRouteChange} />
       </Form>
